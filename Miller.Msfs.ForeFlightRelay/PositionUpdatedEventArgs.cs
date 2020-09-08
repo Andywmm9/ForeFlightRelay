@@ -4,6 +4,11 @@ namespace Miller.Msfs.ForeFlightRelay
 {
     public class PositionUpdatedEventArgs : EventArgs
     {
-        public Position Position { get; set;}
+        public PositionUpdatedEventArgs(AircraftState aircraftState)
+        {
+            AircraftState = aircraftState;
+        }
+
+        public AircraftState AircraftState { get; set;}
     }
 }

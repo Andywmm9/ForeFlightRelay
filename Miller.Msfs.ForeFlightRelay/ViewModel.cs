@@ -37,6 +37,11 @@ namespace Miller.Msfs.ForeFlightRelay
             _simulatorConnection.ReceiveMessage();
         }
 
+        public void SetWindowHandle(IntPtr hWnd)
+        {
+            _simulatorConnection.SetWindowHandle(hWnd);
+        }
+
         private void ToggleConnect()
         {
             try
@@ -60,11 +65,14 @@ namespace Miller.Msfs.ForeFlightRelay
 
         private void OnPositionReceived(object sender, PositionUpdatedEventArgs eventArgs)
         {
-            var foreFlightPositionPacket = new ForeFlightPositionPacket();
-
-            foreFlightPositionPacket.Altitude = eventArgs.Position.Altitude * 0.4048;  // ft to meters
-            foreFlightPositionPacket.Latitude = eventArgs.Position.Latitude;
-            foreFlightPositionPacket.Longitude = eventArgs.Position.Longitude;
+            var foreFlightPositionPacket = new ForeFlightPositionPacket
+            {
+                Altitude = eventArgs.AircraftState.Altitude,
+                Latitude = eventArgs.AircraftState.Latitude,
+                Longitude = eventArgs.AircraftState.Longitude,
+                Track = eventArgs.AircraftState.Heading,
+                Groundspeed = eventArgs.AircraftState.Groundspeed
+            };
 
             _foreFlightPositionNetworkRelay.Send(foreFlightPositionPacket);
         }

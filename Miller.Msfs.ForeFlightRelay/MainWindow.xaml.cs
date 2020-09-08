@@ -20,6 +20,7 @@ namespace Miller.Msfs.ForeFlightRelay
         {
             base.OnSourceInitialized(e);
             GetHWinSource().AddHook(WndProc);
+            ((ViewModel)DataContext).SetWindowHandle(GetHWinSource().Handle);
         }
 
         protected HwndSource GetHWinSource()

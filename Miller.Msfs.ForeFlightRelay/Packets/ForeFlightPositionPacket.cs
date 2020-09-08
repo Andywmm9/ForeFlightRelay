@@ -32,9 +32,9 @@ namespace Miller.Msfs.ForeFlightRelay.Packets
             sb.Append("XGPS");
             sb.Append(_simulatorName);
             sb.Append(",");
-            sb.Append(Longitude.ToString("F2"));
+            sb.Append(Longitude.ToString("F4"));
             sb.Append(",");
-            sb.Append(Latitude.ToString("F2"));
+            sb.Append(Latitude.ToString("F4"));
             sb.Append(",");
             sb.Append(Altitude.ToString("F1"));
             sb.Append(",");

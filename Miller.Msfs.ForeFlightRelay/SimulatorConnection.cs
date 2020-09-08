@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Threading;
 
 namespace Miller.Msfs.ForeFlightRelay
@@ -13,7 +14,6 @@ namespace Miller.Msfs.ForeFlightRelay
         private IntPtr m_hWnd = new IntPtr(0);
         private SimConnect _simConnect;
         private DispatcherTimer _dispatchTimer;
-        private bool _pendingReceivePacket;
 
         public bool IsConnected { get; set; }
         public event EventHandler<PositionUpdatedEventArgs> PositionReceived;
@@ -28,22 +28,16 @@ namespace Miller.Msfs.ForeFlightRelay
             REQUEST_1 = 0,
         };
 
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi, Pack = 1)]
-        struct Struct1
-        {
-            // this is how you declare a fixed size string
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 256)]
-            public String title;
-            public double latitude;
-            public double longitude;
-            public double altitude;
-        };
-
         public SimulatorConnection()
         {
             _dispatchTimer = new DispatcherTimer();
             _dispatchTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             _dispatchTimer.Tick += OnDispatchTimerTick;
+        }
+
+        public void SetWindowHandle(IntPtr hWnd)
+        {
+            m_hWnd = hWnd;
         }
 
         public void Connect()
@@ -82,9 +76,8 @@ namespace Miller.Msfs.ForeFlightRelay
             switch ((DATA_REQUESTS)data.dwRequestID)
             {
                 case DATA_REQUESTS.REQUEST_1:
-                    Struct1 positionPacket = (Struct1)data.dwData[0];
-                    OnPositionReceived(this, new PositionUpdatedEventArgs() { Position = new Position() { Altitude = positionPacket.altitude, Latitude = positionPacket.latitude, Longitude = positionPacket.longitude, Title = positionPacket.title } });
-                    _pendingReceivePacket = false;
+                    AircraftState aircraftState = (AircraftState)data.dwData[0];
+                    OnPositionReceived(this, new PositionUpdatedEventArgs(aircraftState));
                     break;
 
                 default:
@@ -96,13 +89,13 @@ namespace Miller.Msfs.ForeFlightRelay
         private void OnReceiveOpen(SimConnect sender, SIMCONNECT_RECV_OPEN data)
         {
             _simConnect.AddToDataDefinition(DEFINITIONS.Struct1, "Title", null, SIMCONNECT_DATATYPE.STRING256, 0.0f, SimConnect.SIMCONNECT_UNUSED);
-            _simConnect.AddToDataDefinition(DEFINITIONS.Struct1, "Plane Latitude", "degrees", SIMCONNECT_DATATYPE.FLOAT64, 0.0f, SimConnect.SIMCONNECT_UNUSED);
-            _simConnect.AddToDataDefinition(DEFINITIONS.Struct1, "Plane Longitude", "degrees", SIMCONNECT_DATATYPE.FLOAT64, 0.0f, SimConnect.SIMCONNECT_UNUSED);
-            _simConnect.AddToDataDefinition(DEFINITIONS.Struct1, "Plane Altitude", "feet", SIMCONNECT_DATATYPE.FLOAT64, 0.0f, SimConnect.SIMCONNECT_UNUSED);
+            _simConnect.AddToDataDefinition(DEFINITIONS.Struct1, "Plane Latitude", "degrees", SIMCONNECT_DATATYPE.FLOAT64, 0.00f, SimConnect.SIMCONNECT_UNUSED);
+            _simConnect.AddToDataDefinition(DEFINITIONS.Struct1, "Plane Longitude", "degrees", SIMCONNECT_DATATYPE.FLOAT64, 0.00f, SimConnect.SIMCONNECT_UNUSED);
+            _simConnect.AddToDataDefinition(DEFINITIONS.Struct1, "Plane Altitude", "meters", SIMCONNECT_DATATYPE.FLOAT64, 0.0f, SimConnect.SIMCONNECT_UNUSED);
+            _simConnect.AddToDataDefinition(DEFINITIONS.Struct1, "Plane Heading Degrees True", "degrees", SIMCONNECT_DATATYPE.FLOAT64, 0.0f, SimConnect.SIMCONNECT_UNUSED);
+            _simConnect.AddToDataDefinition(DEFINITIONS.Struct1, "Ground Velocity", "meter/second", SIMCONNECT_DATATYPE.FLOAT64, 0.0f, SimConnect.SIMCONNECT_UNUSED);
 
-            _simConnect.RegisterDataDefineStruct<Struct1>(DEFINITIONS.Struct1);
-
-            //_simConnect.RequestDataOnSimObject(DATA_REQUESTS.REQUEST_1, DEFINITIONS.Struct1, 0, SIMCONNECT_PERIOD.SIM_FRAME, SIMCONNECT_DATA_REQUEST_FLAG.DEFAULT, 0, 1, 0);
+            _simConnect.RegisterDataDefineStruct<AircraftState>(DEFINITIONS.Struct1);
 
             _dispatchTimer.Start();
             Debug.WriteLine("Receive Open");
@@ -120,7 +113,6 @@ namespace Miller.Msfs.ForeFlightRelay
 
         private void OnDispatchTimerTick(object sender, EventArgs e)
         {
-            _pendingReceivePacket = true;
             _simConnect?.RequestDataOnSimObjectType(DATA_REQUESTS.REQUEST_1, DEFINITIONS.Struct1, 0, SIMCONNECT_SIMOBJECT_TYPE.USER);
             Debug.WriteLine("Request for data sent");
         }
