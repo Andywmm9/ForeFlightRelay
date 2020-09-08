@@ -1,13 +1,11 @@
 ﻿using Microsoft.FlightSimulator.SimConnect;
 using System;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Threading;
 
 namespace Miller.Msfs.ForeFlightRelay
 {
-    public class SimulatorConnection
+    public class SimulatorConnection : ISimulatorConnection
     {
         private const string _applicationName = "ForeFlight Relay";
         private const int WM_USER_SIMCONNECT = 0x0402;
@@ -15,8 +13,8 @@ namespace Miller.Msfs.ForeFlightRelay
         private SimConnect _simConnect;
         private DispatcherTimer _dispatchTimer;
 
-        public bool IsConnected { get; set; }
-        public event EventHandler<PositionUpdatedEventArgs> PositionReceived;
+        public bool IsConnected { get; private set; }
+        public event EventHandler<PositionUpdatedEventArgs> SimulatorDataReceived;
 
         enum DEFINITIONS
         {
@@ -119,7 +117,7 @@ namespace Miller.Msfs.ForeFlightRelay
 
         private void OnPositionReceived(object sender, PositionUpdatedEventArgs e)
         {
-            PositionReceived?.Invoke(sender, e);
+            SimulatorDataReceived?.Invoke(sender, e);
         }
     }
 }

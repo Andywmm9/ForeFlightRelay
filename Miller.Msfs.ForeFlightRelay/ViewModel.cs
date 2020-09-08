@@ -1,4 +1,5 @@
-﻿using Miller.Msfs.ForeFlightRelay.Packets;
+﻿using Miller.Msfs.ForeFlightRelay.NetworkRelays;
+using Miller.Msfs.ForeFlightRelay.Packets;
 using System;
 using System.ComponentModel;
 
@@ -8,8 +9,8 @@ namespace Miller.Msfs.ForeFlightRelay
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private SimulatorConnection _simulatorConnection;
-        private ForeFlightPositionNetworkRelay _foreFlightPositionNetworkRelay;
+        private ISimulatorConnection _simulatorConnection;
+        private ForeFlightAircraftStateNetworkRelay _foreFlightPositionNetworkRelay;
         private string _connectionButtonText;
 
         public Command ConnectToggleCommand { get; private set; }
@@ -26,10 +27,10 @@ namespace Miller.Msfs.ForeFlightRelay
         public ViewModel()
         {
             _simulatorConnection = new SimulatorConnection();
-            _simulatorConnection.PositionReceived += OnPositionReceived;
+            _simulatorConnection.SimulatorDataReceived += OnPositionReceived;
             ConnectToggleCommand = new Command(x => { ToggleConnect(); });
             ConnectionButtonText = "Connect";
-            _foreFlightPositionNetworkRelay = new ForeFlightPositionNetworkRelay();
+            _foreFlightPositionNetworkRelay = new ForeFlightAircraftStateNetworkRelay();
         }
 
         public void ReceiveSimConnectMessage()
@@ -65,7 +66,7 @@ namespace Miller.Msfs.ForeFlightRelay
 
         private void OnPositionReceived(object sender, PositionUpdatedEventArgs eventArgs)
         {
-            var foreFlightPositionPacket = new ForeFlightPositionPacket
+            var foreFlightPositionPacket = new ForeFlightAircraftStatePacket
             {
                 Altitude = eventArgs.AircraftState.Altitude,
                 Latitude = eventArgs.AircraftState.Latitude,
