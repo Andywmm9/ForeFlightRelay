@@ -5,7 +5,7 @@ using System.Windows.Threading;
 
 namespace Miller.Msfs.ForeFlightRelay
 {
-    public class SimulatorConnection : ISimulatorConnection
+    public class MsfsSimulatorConnection : ISimulatorConnection
     {
         private const string _applicationName = "ForeFlight Relay";
         private const int WM_USER_SIMCONNECT = 0x0402;
@@ -26,7 +26,7 @@ namespace Miller.Msfs.ForeFlightRelay
             REQUEST_1 = 0,
         };
 
-        public SimulatorConnection()
+        public MsfsSimulatorConnection()
         {
             _dispatchTimer = new DispatcherTimer();
             _dispatchTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);

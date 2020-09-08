@@ -2,6 +2,7 @@
 using Miller.Msfs.ForeFlightRelay.Packets;
 using System;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace Miller.Msfs.ForeFlightRelay
 {
@@ -12,25 +13,28 @@ namespace Miller.Msfs.ForeFlightRelay
         private ISimulatorConnection _simulatorConnection;
         private ForeFlightAircraftStateNetworkRelay _foreFlightPositionNetworkRelay;
         private string _connectionButtonText;
+        private DispatcherTimer _autoConnectTimer;
+        private bool _isConnected;
 
-        public Command ConnectToggleCommand { get; private set; }
-        public string ConnectionButtonText
+        public bool IsConnected
         {
-            get { return _connectionButtonText; }
+            get { return _isConnected; }
             set
             {
-                _connectionButtonText = value;
-                NotifyPropertyChanged(nameof(ConnectionButtonText));
+                _isConnected = value;
+                NotifyPropertyChanged(nameof(IsConnected));
             }
         }
 
         public ViewModel()
         {
-            _simulatorConnection = new SimulatorConnection();
+            _simulatorConnection = new MsfsSimulatorConnection();
             _simulatorConnection.SimulatorDataReceived += OnPositionReceived;
-            ConnectToggleCommand = new Command(x => { ToggleConnect(); });
-            ConnectionButtonText = "Connect";
             _foreFlightPositionNetworkRelay = new ForeFlightAircraftStateNetworkRelay();
+            _autoConnectTimer = new DispatcherTimer();
+            _autoConnectTimer.Tick += OnTryAutoConnect;
+            _autoConnectTimer.Interval = new TimeSpan(0, 0, 5);
+            _autoConnectTimer.Start();
         }
 
         public void ReceiveSimConnectMessage()
@@ -50,12 +54,12 @@ namespace Miller.Msfs.ForeFlightRelay
                 if (!_simulatorConnection.IsConnected)
                 {
                     _simulatorConnection.Connect();
-                    ConnectionButtonText = "Disconnect";
+                    IsConnected = true;
                 }
                 else
                 {
                     _simulatorConnection.Disconnect();
-                    ConnectionButtonText = "Connect";
+                    IsConnected = false;
                 }
             }
             catch (Exception ex)
@@ -76,6 +80,14 @@ namespace Miller.Msfs.ForeFlightRelay
             };
 
             _foreFlightPositionNetworkRelay.Send(foreFlightPositionPacket);
+        }
+
+        private void OnTryAutoConnect(object sender, EventArgs e)
+        {
+            if (_simulatorConnection.IsConnected)
+                return;
+
+            ToggleConnect();
         }
 
         private void NotifyPropertyChanged(string propertyName)

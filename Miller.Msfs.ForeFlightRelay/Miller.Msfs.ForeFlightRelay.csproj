@@ -28,10 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ModernWpfUI" Version="0.9.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="Microsoft.FlightSimulator.SimConnect">
       <HintPath>Microsoft.FlightSimulator.SimConnect.dll</HintPath>
     </Reference>

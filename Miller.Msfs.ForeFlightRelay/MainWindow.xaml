@@ -5,16 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Miller.Msfs.ForeFlightRelay"
         mc:Ignorable="d"
-        xmlns:ui="http://schemas.modernwpf.com/2019"
-        ui:WindowHelper.UseModernWindowStyle="True"
-        Title="MSFS ForeFlight Relay" Height="246.823" Width="458.361">
-    <ui:SimpleStackPanel Orientation="Vertical" 
-                         Spacing="24"
+        Title="MSFS ForeFlight Relay" Height="150" Width="450">
+    <StackPanel Orientation="Horizontal" 
                          Margin="20">
-        <TextBlock Text="Microsoft Flight Simulator ForeFlight Relay" 
-                   Style="{StaticResource HeaderTextBlockStyle}" 
-                   FontSize="20" />
-
-        <Button Content="{Binding ConnectionButtonText}" Command="{Binding ConnectToggleCommand}"/>
-    </ui:SimpleStackPanel>
+        <Ellipse  Height="25" 
+                  Stroke="Black" 
+                  Margin="10"
+                  Width="25">
+            <Ellipse.Style>
+                <Style TargetType="Ellipse">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsConnected}" Value="false">
+                            <Setter Property="Fill" Value="#FFFF5030" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsConnected}" Value="true">
+                            <Setter Property="Fill" Value="#FF50FF30" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Ellipse.Style>
+        </Ellipse>
+        <TextBlock VerticalAlignment="Center"
+                   FontSize="20">
+            <TextBlock.Style>
+                <Style TargetType="TextBlock">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsConnected}" Value="false">
+                            <Setter Property="Text" Value="Waiting for Simulator Connection" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsConnected}" Value="true">
+                            <Setter Property="Text" Value="Simulator Connected" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+    </StackPanel>
 </Window>
