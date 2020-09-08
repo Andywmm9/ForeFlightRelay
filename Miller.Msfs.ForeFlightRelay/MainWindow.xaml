@@ -1,0 +1,20 @@
+﻿<Window x:Class="Miller.Msfs.ForeFlightRelay.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Miller.Msfs.ForeFlightRelay"
+        mc:Ignorable="d"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        Title="MSFS ForeFlight Relay" Height="246.823" Width="458.361">
+    <ui:SimpleStackPanel Orientation="Vertical" 
+                         Spacing="24"
+                         Margin="20">
+        <TextBlock Text="Microsoft Flight Simulator ForeFlight Relay" 
+                   Style="{StaticResource HeaderTextBlockStyle}" 
+                   FontSize="20" />
+
+        <Button Content="{Binding ConnectionButtonText}" Command="{Binding ConnectToggleCommand}"/>
+    </ui:SimpleStackPanel>
+</Window>
