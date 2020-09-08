@@ -1,0 +1,8 @@
+<h1>Miller.Msfs.ForeFlightRelay</h1>
+This stand-alone Windows application listens for data from Microsoft Flight Simulator and broadcast UDP packets for ForeFlight to receive and display information about your flight.
+
+<h2>Installing the Application</h2>
+Download the latest version in the Releases folder: https://github.com/Andywmm9/Miller.Msfs.ForeFlightRelay/tree/master/Miller.Msfs.ForeFlightRelay/Release
+
+<h2>Compiling the Source Code</h2>
+Download and compile the source code using Visual Studio.  The only prequisite, SimConnect.dll and Microsoft.FlightSimulator.SimConnect.dll are included in the project directory.
