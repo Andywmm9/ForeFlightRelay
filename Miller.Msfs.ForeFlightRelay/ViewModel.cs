@@ -12,7 +12,6 @@ namespace Miller.Msfs.ForeFlightRelay
 
         private ISimulatorConnection _simulatorConnection;
         private ForeFlightAircraftStateNetworkRelay _foreFlightPositionNetworkRelay;
-        private string _connectionButtonText;
         private DispatcherTimer _autoConnectTimer;
         private bool _isConnected;
 
@@ -30,6 +29,7 @@ namespace Miller.Msfs.ForeFlightRelay
         {
             _simulatorConnection = new MsfsSimulatorConnection();
             _simulatorConnection.SimulatorDataReceived += OnPositionReceived;
+            _simulatorConnection.SimulatorConnectionLost += OnConnectionLost;
             _foreFlightPositionNetworkRelay = new ForeFlightAircraftStateNetworkRelay();
             _autoConnectTimer = new DispatcherTimer();
             _autoConnectTimer.Tick += OnTryAutoConnect;
@@ -80,6 +80,11 @@ namespace Miller.Msfs.ForeFlightRelay
             };
 
             _foreFlightPositionNetworkRelay.Send(foreFlightPositionPacket);
+        }
+
+        private void OnConnectionLost(object sender, EventArgs e)
+        {
+            IsConnected = false;
         }
 
         private void OnTryAutoConnect(object sender, EventArgs e)

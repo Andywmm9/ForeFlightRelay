@@ -15,6 +15,7 @@ namespace Miller.Msfs.ForeFlightRelay
 
         public bool IsConnected { get; private set; }
         public event EventHandler<PositionUpdatedEventArgs> SimulatorDataReceived;
+        public event EventHandler<EventArgs> SimulatorConnectionLost;
 
         enum DEFINITIONS
         {
@@ -66,6 +67,7 @@ namespace Miller.Msfs.ForeFlightRelay
             _simConnect.Dispose();
             _simConnect = null;
             IsConnected = false;
+            OnSimulatorConnectionLost(this, new EventArgs());
             Debug.WriteLine("Disconnected");
         }
 
@@ -118,6 +120,11 @@ namespace Miller.Msfs.ForeFlightRelay
         private void OnPositionReceived(object sender, PositionUpdatedEventArgs e)
         {
             SimulatorDataReceived?.Invoke(sender, e);
+        }
+
+        private void OnSimulatorConnectionLost(object sender, EventArgs e)
+        {
+            SimulatorConnectionLost?.Invoke(sender, e);
         }
     }
 }

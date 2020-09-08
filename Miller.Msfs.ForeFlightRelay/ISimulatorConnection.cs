@@ -10,6 +10,11 @@ namespace Miller.Msfs.ForeFlightRelay
         event EventHandler<PositionUpdatedEventArgs> SimulatorDataReceived;
 
         /// <summary>
+        /// Fires when a connection is lost to the simulator.
+        /// </summary>
+        event EventHandler<EventArgs> SimulatorConnectionLost;
+
+        /// <summary>
         /// Determines if the simulator is connected.
         /// </summary>
         bool IsConnected { get; }
