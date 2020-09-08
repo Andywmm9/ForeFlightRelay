@@ -2,7 +2,7 @@
 This stand-alone Windows application listens for data from Microsoft Flight Simulator and broadcast UDP packets for ForeFlight to receive and display information about your flight.
 
 ## Installing the Application
-1. Download the latest version in the Releases folder https://github.com/Andywmm9/Miller.Msfs.ForeFlightRelay/tree/master/Miller.Msfs.ForeFlightRelay/Release.
+1. Download the ZIP file for the latest version here: https://github.com/Andywmm9/Miller.Msfs.ForeFlightRelay/releases.
 2.  Unzip to a location on your machine.
 3.  Run Miller.Msfs.ForeFlightRelay.exe.  When a connection to the simulator is found, the red circle will change to green, and packets will then be broadcasted on your local network.  ForeFlight should automatically begin using this, if not check ForeFlight's Settings and Devices.
 
