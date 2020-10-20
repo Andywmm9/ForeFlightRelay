@@ -4,17 +4,17 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace Miller.Msfs.ForeFlightRelay.NetworkRelays
+namespace Miller.Msfs.ForeFlightRelay
 {
-    public class ForeFlightAircraftStateNetworkRelay
+    public class NetworkRelay
     {
         private const int _port = 49002;
         private UdpClient _updClient = new UdpClient();
 
-        public void Send(ForeFlightAircraftStatePacket foreFlightPositionPacket)
+        public void Send(IPacket packet)
         {
             var endPoint = new IPEndPoint(IPAddress.Broadcast, _port);
-            var encodedMessage = foreFlightPositionPacket.Encode();
+            var encodedMessage = packet.Encode();
             var bytes = Encoding.ASCII.GetBytes(encodedMessage);
 
             _updClient.Send(bytes, bytes.Length, endPoint);

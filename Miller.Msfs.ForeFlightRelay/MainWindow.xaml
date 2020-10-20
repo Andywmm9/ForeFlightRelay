@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Miller.Msfs.ForeFlightRelay"
         mc:Ignorable="d"
-        Title="MSFS ForeFlight Relay" Height="150" Width="450">
+        Title="MSFS ForeFlight Relay"
+        Height="150" 
+        Width="450"
+        ResizeMode="CanMinimize">
     <StackPanel Orientation="Horizontal" 
                          Margin="20">
         <Ellipse  Height="25" 

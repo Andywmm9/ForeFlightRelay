@@ -2,7 +2,7 @@
 
 namespace Miller.Msfs.ForeFlightRelay.Packets
 {
-    public class ForeFlightAircraftStatePacket
+    public class ForeFlightAircraftStatePacket : IPacket
     {
         private const string _simulatorName = "Microsoft Flight Simulator";
 

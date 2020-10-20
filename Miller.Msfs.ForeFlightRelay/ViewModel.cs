@@ -1,5 +1,4 @@
-﻿using Miller.Msfs.ForeFlightRelay.NetworkRelays;
-using Miller.Msfs.ForeFlightRelay.Packets;
+﻿using Miller.Msfs.ForeFlightRelay.Packets;
 using System;
 using System.ComponentModel;
 using System.Windows.Threading;
@@ -11,7 +10,7 @@ namespace Miller.Msfs.ForeFlightRelay
         public event PropertyChangedEventHandler PropertyChanged;
 
         private ISimulatorConnection _simulatorConnection;
-        private ForeFlightAircraftStateNetworkRelay _foreFlightPositionNetworkRelay;
+        private NetworkRelay _foreFlightPositionNetworkRelay;
         private DispatcherTimer _autoConnectTimer;
         private bool _isConnected;
 
@@ -30,7 +29,7 @@ namespace Miller.Msfs.ForeFlightRelay
             _simulatorConnection = new MsfsSimulatorConnection();
             _simulatorConnection.SimulatorDataReceived += OnPositionReceived;
             _simulatorConnection.SimulatorConnectionLost += OnConnectionLost;
-            _foreFlightPositionNetworkRelay = new ForeFlightAircraftStateNetworkRelay();
+            _foreFlightPositionNetworkRelay = new NetworkRelay();
             _autoConnectTimer = new DispatcherTimer();
             _autoConnectTimer.Tick += OnTryAutoConnect;
             _autoConnectTimer.Interval = new TimeSpan(0, 0, 5);
