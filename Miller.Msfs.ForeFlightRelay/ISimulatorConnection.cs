@@ -9,6 +9,7 @@ namespace Miller.Msfs.ForeFlightRelay
         /// </summary>
         event EventHandler<AircraftStateEventArgs> AircraftStateDataReceived;
         event EventHandler<TrafficStateEventArgs> TrafficDataReceived;
+        event EventHandler<AHRSDataEventArgs> AHRSDataReceived;
         /// <summary>
         /// Fires when a connection is lost to the simulator.
         /// </summary>

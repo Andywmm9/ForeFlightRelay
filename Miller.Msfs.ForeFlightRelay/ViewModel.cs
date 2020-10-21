@@ -29,6 +29,7 @@ namespace Miller.Msfs.ForeFlightRelay
         {
             _simulatorConnection = new MsfsSimulatorConnection();
             _simulatorConnection.AircraftStateDataReceived += OnPositionReceived;
+            _simulatorConnection.AHRSDataReceived += OnAHRSDataReceived;
             _simulatorConnection.TrafficDataReceived += OnTrafficReceived;
             _simulatorConnection.SimulatorConnectionLost += OnConnectionLost;
             _foreFlightPositionNetworkRelay = new NetworkRelay();
@@ -82,6 +83,19 @@ namespace Miller.Msfs.ForeFlightRelay
             };
 
             _foreFlightPositionNetworkRelay.Send(foreFlightPositionPacket);
+        }
+
+        private void OnAHRSDataReceived(object sender, AHRSDataEventArgs eventArgs)
+        {
+            var foreFlightAHRSPacket = new ForeFlightAHRSPacket
+            {
+                SimulatorName = _simulatorName,
+                TrueHeading = eventArgs.AHRSData.TrueHeading,
+                Pitch = -eventArgs.AHRSData.Pitch,
+                Roll = -eventArgs.AHRSData.Roll
+            };
+
+            _foreFlightPositionNetworkRelay.Send(foreFlightAHRSPacket);
         }
 
         private void OnTrafficReceived(object sender, TrafficStateEventArgs eventArgs)
