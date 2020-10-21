@@ -2,9 +2,9 @@
 
 namespace Miller.Msfs.ForeFlightRelay
 {
-    public class PositionUpdatedEventArgs : EventArgs
+    public class AircraftStateEventArgs : EventArgs
     {
-        public PositionUpdatedEventArgs(AircraftState aircraftState)
+        public AircraftStateEventArgs(AircraftState aircraftState)
         {
             AircraftState = aircraftState;
         }

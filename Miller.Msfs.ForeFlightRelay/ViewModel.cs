@@ -9,6 +9,7 @@ namespace Miller.Msfs.ForeFlightRelay
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private const string _simulatorName = "Microsoft Flight Simulator";
         private ISimulatorConnection _simulatorConnection;
         private NetworkRelay _foreFlightPositionNetworkRelay;
         private DispatcherTimer _autoConnectTimer;
@@ -27,7 +28,8 @@ namespace Miller.Msfs.ForeFlightRelay
         public ViewModel()
         {
             _simulatorConnection = new MsfsSimulatorConnection();
-            _simulatorConnection.SimulatorDataReceived += OnPositionReceived;
+            _simulatorConnection.AircraftStateDataReceived += OnPositionReceived;
+            _simulatorConnection.TrafficDataReceived += OnTrafficReceived;
             _simulatorConnection.SimulatorConnectionLost += OnConnectionLost;
             _foreFlightPositionNetworkRelay = new NetworkRelay();
             _autoConnectTimer = new DispatcherTimer();
@@ -67,10 +69,11 @@ namespace Miller.Msfs.ForeFlightRelay
             }
         }
 
-        private void OnPositionReceived(object sender, PositionUpdatedEventArgs eventArgs)
+        private void OnPositionReceived(object sender, AircraftStateEventArgs eventArgs)
         {
             var foreFlightPositionPacket = new ForeFlightAircraftStatePacket
             {
+                SimulatorName = _simulatorName,
                 Altitude = eventArgs.AircraftState.Altitude,
                 Latitude = eventArgs.AircraftState.Latitude,
                 Longitude = eventArgs.AircraftState.Longitude,
@@ -79,6 +82,24 @@ namespace Miller.Msfs.ForeFlightRelay
             };
 
             _foreFlightPositionNetworkRelay.Send(foreFlightPositionPacket);
+        }
+
+        private void OnTrafficReceived(object sender, TrafficStateEventArgs eventArgs)
+        {
+            var foreFlightTrafficPacket = new ForeFlightTrafficPacket
+            {
+                SimulatorName = _simulatorName,
+                Latitude = eventArgs.TrafficState.Latitude,
+                Longitude = eventArgs.TrafficState.Longitude,
+                IsAirborne = !eventArgs.TrafficState.IsOnGround,
+                Velocity = eventArgs.TrafficState.Groundspeed,
+                Altitude = eventArgs.TrafficState.Altitude,
+                Callsign = eventArgs.TrafficState.Callsign,
+                ICAOAddress = eventArgs.TrafficState.ICAOAddress,
+                Heading = eventArgs.TrafficState.Heading
+            };
+
+            _foreFlightPositionNetworkRelay.Send(foreFlightTrafficPacket);
         }
 
         private void OnConnectionLost(object sender, EventArgs e)

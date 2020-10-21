@@ -5,10 +5,10 @@ namespace Miller.Msfs.ForeFlightRelay
     public interface ISimulatorConnection
     {
         /// <summary>
-        /// Fires when data from the simulator is received.
+        /// Fires when data from the current aircraft is received from the simulator.
         /// </summary>
-        event EventHandler<PositionUpdatedEventArgs> SimulatorDataReceived;
-
+        event EventHandler<AircraftStateEventArgs> AircraftStateDataReceived;
+        event EventHandler<TrafficStateEventArgs> TrafficDataReceived;
         /// <summary>
         /// Fires when a connection is lost to the simulator.
         /// </summary>

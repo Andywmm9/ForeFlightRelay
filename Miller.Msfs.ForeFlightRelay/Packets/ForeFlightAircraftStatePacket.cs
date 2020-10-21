@@ -4,8 +4,7 @@ namespace Miller.Msfs.ForeFlightRelay.Packets
 {
     public class ForeFlightAircraftStatePacket : IPacket
     {
-        private const string _simulatorName = "Microsoft Flight Simulator";
-
+        public string SimulatorName { get; set;}
         public double Longitude { get; set;}
         public double Latitude { get; set;}
         /// <summary>
@@ -30,7 +29,7 @@ namespace Miller.Msfs.ForeFlightRelay.Packets
             var sb = new StringBuilder();
 
             sb.Append("XGPS");
-            sb.Append(_simulatorName);
+            sb.Append(SimulatorName);
             sb.Append(",");
             sb.Append(Longitude.ToString("F4"));
             sb.Append(",");
