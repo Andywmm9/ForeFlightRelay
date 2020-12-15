@@ -41,7 +41,7 @@ namespace Miller.Msfs.ForeFlightRelay
 
         public void Connect()
         {
-            _simConnect = new SimConnect(_applicationName, m_hWnd, WM_USER_SIMCONNECT, null, 1);
+            _simConnect = new SimConnect(_applicationName, m_hWnd, WM_USER_SIMCONNECT, null, 0);
             _simConnect.OnRecvOpen += new SimConnect.RecvOpenEventHandler(OnReceiveOpen);
             _simConnect.OnRecvQuit += new SimConnect.RecvQuitEventHandler(OnReceiveQuit);
             _simConnect.OnRecvException += new SimConnect.RecvExceptionEventHandler(OnReceiveException);
