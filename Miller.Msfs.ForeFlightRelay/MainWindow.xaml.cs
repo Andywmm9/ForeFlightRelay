@@ -11,7 +11,16 @@ namespace Miller.Msfs.ForeFlightRelay
     {
         public MainWindow()
         {
-            DataContext = new ViewModel();
+            var viewModel = new ViewModel();
+
+            viewModel.PropertyChanged += (sender, e) => {
+                if (e.PropertyName == nameof(ViewModel.IsConnected))
+                {
+                    if (!viewModel.IsConnected) System.Windows.Application.Current.Shutdown();
+                }
+            };
+
+            DataContext = viewModel;
 
             InitializeComponent();
         }
