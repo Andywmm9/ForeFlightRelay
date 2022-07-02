@@ -1,10 +1,10 @@
-﻿using Miller.Msfs.ForeFlightRelay.Packets;
+﻿using ForeFlightRelay.Wpf.Packets;
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace Miller.Msfs.ForeFlightRelay
+namespace ForeFlightRelay.Wpf
 {
     public class NetworkRelay
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Miller.Msfs.ForeFlightRelay
+namespace ForeFlightRelay.Wpf
 {
     public class TrafficStateEventArgs : EventArgs
     {
@@ -9,6 +9,6 @@ namespace Miller.Msfs.ForeFlightRelay
             TrafficState = trafficState;
         }
 
-        public TrafficState TrafficState { get; set;}
+        public TrafficState TrafficState { get; set; }
     }
 }

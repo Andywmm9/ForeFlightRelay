@@ -1,24 +1,24 @@
 ﻿using System.Text;
 
-namespace Miller.Msfs.ForeFlightRelay.Packets
+namespace ForeFlightRelay.Wpf.Packets
 {
     public class ForeFlightAircraftStatePacket : IPacket
     {
-        public string SimulatorName { get; set;}
-        public double Longitude { get; set;}
-        public double Latitude { get; set;}
+        public string SimulatorName { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
         /// <summary>
         /// Altitude in meters MSL.
         /// </summary>
-        public double Altitude { get; set;}
+        public double Altitude { get; set; }
         /// <summary>
         /// Track-along-ground from true north, positive value.
         /// </summary>
-        public double Track { get; set;}
+        public double Track { get; set; }
         /// <summary>
         /// Groundspeed in meteres/sec.
         /// </summary>
-        public double Groundspeed { get; set;}
+        public double Groundspeed { get; set; }
 
         /// <summary>
         /// Returns a string format of the packet data to send over the network.

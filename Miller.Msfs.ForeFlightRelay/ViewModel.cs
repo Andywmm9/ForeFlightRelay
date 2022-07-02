@@ -1,9 +1,9 @@
-﻿using Miller.Msfs.ForeFlightRelay.Packets;
+﻿using ForeFlightRelay.Wpf.Packets;
 using System;
 using System.ComponentModel;
 using System.Windows.Threading;
 
-namespace Miller.Msfs.ForeFlightRelay
+namespace ForeFlightRelay.Wpf
 {
     public class ViewModel : INotifyPropertyChanged
     {
@@ -119,6 +119,7 @@ namespace Miller.Msfs.ForeFlightRelay
         private void OnConnectionLost(object sender, EventArgs e)
         {
             IsConnected = false;
+            System.Windows.Application.Current.Shutdown();
         }
 
         private void OnTryAutoConnect(object sender, EventArgs e)

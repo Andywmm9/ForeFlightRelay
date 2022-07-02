@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Miller.Msfs.ForeFlightRelay
+namespace ForeFlightRelay.Wpf
 {
     public class AircraftStateEventArgs : EventArgs
     {
@@ -9,6 +9,6 @@ namespace Miller.Msfs.ForeFlightRelay
             AircraftState = aircraftState;
         }
 
-        public AircraftState AircraftState { get; set;}
+        public AircraftState AircraftState { get; set; }
     }
 }

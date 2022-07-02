@@ -1,4 +1,4 @@
-﻿namespace Miller.Msfs.ForeFlightRelay.Packets
+﻿namespace ForeFlightRelay.Wpf.Packets
 {
     public interface IPacket
     {

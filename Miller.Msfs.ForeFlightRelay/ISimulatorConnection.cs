@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Miller.Msfs.ForeFlightRelay
+namespace ForeFlightRelay.Wpf
 {
     public interface ISimulatorConnection
     {

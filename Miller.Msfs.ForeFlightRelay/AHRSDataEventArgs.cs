@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Miller.Msfs.ForeFlightRelay
+namespace ForeFlightRelay.Wpf
 {
     public class AHRSDataEventArgs : EventArgs
     {
-        public AHRSData AHRSData { get; set;}
+        public AHRSData AHRSData { get; set; }
 
         public AHRSDataEventArgs(AHRSData ahrsData)
         {

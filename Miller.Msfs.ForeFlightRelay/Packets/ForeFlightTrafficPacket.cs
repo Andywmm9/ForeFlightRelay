@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace Miller.Msfs.ForeFlightRelay.Packets
+namespace ForeFlightRelay.Wpf.Packets
 {
     public class ForeFlightTrafficPacket : IPacket
     {

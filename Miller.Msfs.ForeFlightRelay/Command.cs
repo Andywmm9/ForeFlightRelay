@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Miller.Msfs.ForeFlightRelay
+namespace ForeFlightRelay.Wpf
 {
     public class Command : ICommand
     {
-        public Action<object> ExecuteDelegate { get; set;}
+        public Action<object> ExecuteDelegate { get; set; }
         public event EventHandler CanExecuteChanged = null;
 
         public Command()

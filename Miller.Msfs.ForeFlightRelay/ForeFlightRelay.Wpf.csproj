@@ -5,7 +5,7 @@
     <TargetFramework>net461</TargetFramework>
     <UseWPF>true</UseWPF>
     <Platforms>AnyCPU;x64</Platforms>
-    <StartupObject>Miller.Msfs.ForeFlightRelay.App</StartupObject>
+    <StartupObject>ForeFlightRelay.Wpf.App</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,6 +25,10 @@
     <Content Include="SimConnect.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MahApps.Metro" Version="2.4.9" />
   </ItemGroup>
 
   <ItemGroup>

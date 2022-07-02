@@ -2,7 +2,7 @@
 using System;
 using System.Diagnostics;
 
-namespace Miller.Msfs.ForeFlightRelay
+namespace ForeFlightRelay.Wpf
 {
     public class MsfsSimulatorConnection : ISimulatorConnection
     {
