@@ -1,4 +1,4 @@
-<h1>Miller.Msfs.ForeFlightRelay</h1>
+<h1>ForeFlightRelay</h1>
 This stand-alone Windows application listens for data from Microsoft Flight Simulator and broadcast UDP packets for ForeFlight to receive and display information about your flight.
 
 ## Installing the Application
